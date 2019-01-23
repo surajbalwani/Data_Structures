@@ -57,6 +57,7 @@ int ListLength(node *head)
 void getData(node *head)
 {
     node *current = head;
+
     while(current->next != NULL)
     {
         printf("%d ",current->data);
@@ -97,6 +98,20 @@ void DeleteNodeFromLinkedList(node **head,int position)
         }
     }
 }
+
+void DeleteLinkedList(node **head)
+{
+    node *auxilaryNode,*iterator;
+    iterator=*head;
+    while(iterator)
+    {
+        auxilaryNode = iterator->next;
+        free(iterator);
+        iterator = auxilaryNode;
+        *head = NULL;
+    }
+}
+
 int main()
 {
     int c=0,data=0,position=0,loop=1;
@@ -107,7 +122,7 @@ int main()
 
     while(loop)
     {
-        printf("[1]insert\n[2]count\n[3]print\n[4]delete\n>");
+        printf("[1]insert\n[2]count\n[3]print\n[4]delete\n[5]delete linkedlist\n>");
         scanf("%d",&c);
         switch(c)
         {
@@ -139,6 +154,15 @@ int main()
             printf("List after deletion : ");
             getData(Head);
             printf("\n\n");
+            break;
+
+        case 5:
+            DeleteLinkedList(&Head);
+            printf("LinkedList successfully deleted\n\n");
+            break;
+
+        default:
+            printf("Wrong input.Try again!\n\n");
             break;
         }
 
