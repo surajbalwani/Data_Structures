@@ -46,7 +46,7 @@ int ListLength(node *head)
     node *current = head;
     int count=0;
 
-    while(current != NULL)
+    while(current->next != NULL)
     {
         count++;
         current=current->next;
@@ -54,16 +54,95 @@ int ListLength(node *head)
     return count;
 }
 
+void getData(node *head)
+{
+    node *current = head;
+    while(current->next != NULL)
+    {
+        printf("%d ",current->data);
+        current=current->next;
+    }
+}
+
+void DeleteNodeFromLinkedList(node **head,int position)
+{
+    int k=1,positon=0;
+    node *p,*q;
+    if(*head==NULL)
+    {
+        printf("List Empty");
+        return;
+    }
+    p=*head;
+    if(positon=1)
+    {
+        *head=(*head)->next;
+        free(p);
+        return;
+    }
+    else
+    {
+        while((p!=NULL) && (k<positon))
+        {
+            k++;
+            q=p;
+            p=p->next;
+        }
+        if(p==NULL)
+            printf("position does not exist");
+        else
+        {
+            q->next=p->next;
+            free(p);
+        }
+    }
+}
 int main()
 {
-    int c=0;
+    int c=0,data=0,position=0,loop=1;
 
     node *Head;
     Head = (node *)malloc(sizeof(node));
     Head -> next = NULL;
 
-    InsertInLinkedList(&Head,15,1);
-    InsertInLinkedList(&Head,20,1);
+    while(loop)
+    {
+        printf("[1]insert\n[2]count\n[3]print\n[4]delete\n>");
+        scanf("%d",&c);
+        switch(c)
+        {
+        case 1:
+            printf("enter the data : ");
+            scanf("%d",&data);
+            printf("enter the position : ");
+            scanf("%d",&position);
+            InsertInLinkedList(&Head,data,position);
+            printf("\n");
+            break;
 
-    printf("count : %d",ListLength(Head));
+        case 2:
+            printf("count : %d\n\n",ListLength(Head));
+            break;
+
+        case 3:
+            printf("List : ");
+            getData(Head);
+            printf("\n\n");
+            break;
+
+        case 4:
+            printf("List : ");
+            getData(Head);
+            printf("\nenter the position of the element : ");
+            scanf("%d",&position);
+            DeleteNodeFromLinkedList(&Head,position);
+            printf("List after deletion : ");
+            getData(Head);
+            printf("\n\n");
+            break;
+        }
+
+        printf("Do you want to continue?[1,0] : ");
+        scanf("%d",&loop);
+    }
 }
